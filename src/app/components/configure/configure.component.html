@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="m-5">
+    <h1>Add Kind Word</h1>
+
+    <div>
+      <mat-form-field style="width: 100%">
+        <mat-label>Sentence</mat-label>
+        <input matInput [(ngModel)]="kindWord" placeholder="a kind word" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="onAddKindWord()">
+        Add Kind Word
+      </button>
+    </div>
+
+    <h1 class="mt-5">Kind Words</h1>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+      style="width: 100%"
+    >
+      <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="sentence">
+        <th mat-header-cell *matHeaderCellDef>Sentence</th>
+        <td mat-cell *matCellDef="let element">{{ element.sentence }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Created At</th>
+        <td mat-cell *matCellDef="let element">{{ element.createdAt }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
