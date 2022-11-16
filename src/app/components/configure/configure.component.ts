@@ -48,7 +48,7 @@ export class ConfigureComponent implements OnInit {
   public async onRemoveSentence(sentence: Sentence) {
     this.saving = true;
     try {
-      // TODO remove the sentence from the server
+      await kindWords.removeKindWord(sentence);
 
       this.sentences = this.sentences.filter(x => x.id !== sentence.id);
       this.dataSource.data = this.sentences;
