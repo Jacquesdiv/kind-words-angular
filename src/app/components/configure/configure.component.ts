@@ -8,12 +8,12 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ConfigureComponent implements OnInit {
 
-  displayedColumns: string[] = ['sentence', 'createdAt'];
+  displayedColumns: string[] = ['sentence', 'createdAt', 'actions'];
 
   public fetching: boolean = false;
   public saving: boolean = false;
   public sentences: Sentence[] = [];
-  public kindWord: string = "";
+  public sentence: string = "";
 
   public dataSource = new MatTableDataSource<Sentence>();
 
@@ -27,20 +27,33 @@ export class ConfigureComponent implements OnInit {
       this.sentences = await kindWords.fetchKindWords();
       this.dataSource.data = this.sentences;
     } catch (err) {
-      // TODO: handle this
+      console.log(err);
     }
     this.fetching = false;
   }
 
-  public async onAddKindWord() {
+  public async onAddSentence() {
     this.saving = true;
     try {
-      const sentence = await kindWords.createKindWord(this.kindWord);
+      const sentence = await kindWords.createKindWord(this.sentence);
       this.sentences.push(sentence);
       this.dataSource.data = this.sentences;
-      this.kindWord = "";
+      this.sentence = "";
     } catch (err) {
-      // TODO: handle this
+      console.log(err);
+    }
+    this.saving = false;
+  }
+
+  public async onRemoveSentence(sentence: Sentence) {
+    this.saving = true;
+    try {
+      // TODO remove the sentence from the server
+
+      this.sentences = this.sentences.filter(x => x.id !== sentence.id);
+      this.dataSource.data = this.sentences;
+    } catch (err) {
+      console.log(err);
     }
     this.saving = false;
   }
